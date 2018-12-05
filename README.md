@@ -4,7 +4,7 @@ Get started on integrating the Blondie into your native Android app through thes
 
 ## Installation
 
-Install Blondie to perform automations right from your iOS app.
+Install Blondie to perform automations right from your Android app.
 
 ### Step 1 - Install Blondie SDK
 
