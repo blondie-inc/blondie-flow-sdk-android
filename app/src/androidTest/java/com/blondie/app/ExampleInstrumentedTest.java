@@ -1,4 +1,4 @@
-package com.blondie.blondie_android_sdk;
+package com.blondie.app;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
