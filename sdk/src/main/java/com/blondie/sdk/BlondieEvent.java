@@ -11,9 +11,8 @@ public class BlondieEvent {
     private String form;
     private JSONObject jsonParams;
 
-    BlondieEvent(String from){
+    public BlondieEvent(String from){
         this.form = form;
-
     }
 
     public void set(String key, String value){

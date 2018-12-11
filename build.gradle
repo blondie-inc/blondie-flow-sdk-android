@@ -20,6 +20,14 @@ allprojects {
     repositories {
         google()
         jcenter()
+        // Phunware Maven dependepcies
+        mavenCentral()
+        mavenLocal()
+        flatDir {
+            dirs '../libs'
+        }
+        maven { url "https://jitpack.io" }
+        maven { url "https://blondie.bintray.com/maven/" }
     }
 }
 

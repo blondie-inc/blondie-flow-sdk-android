@@ -14,6 +14,18 @@ public class Blondie{
         sApiKey = apiKey;
     }
 
+    public static void useDevelopmentEnvironment(){
+
+    }
+
+    public static void useTestEnvironment(){
+
+    }
+
+    public static void useProductionEnvironment(){
+
+    }
+
     public static void setBaseUrl(String url){
 
     }
