@@ -8,10 +8,33 @@ Install Blondie to perform automations right from your Android app.
 
 ### Step 1 - Install Blondie SDK
 
-Before you start, you need to make sure you have an access to the Blondie. If you are using Maven, add the following to your build.gradle file:
+Before you start, you need to make sure you have an access to the Blondie. If you are using Gradle, add the following to your build.gradle file:
 
 ```
-implementation 'com.blondie.sdk:blondie-android:1.0.0'
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        // B Maven dependepcies
+        mavenCentral()
+        mavenLocal()
+        flatDir {
+            dirs '../libs'
+        }
+        maven { url "https://jitpack.io" }
+        maven { url "https://blondie.bintray.com/maven/" }
+    }
+}
+
+```
+```
+implementation 'com.blondie:sdk:0.0.1'
+
+```
+
+Also you need added naxt permissions to AndroidManifest.xml file:
+```
+<uses-permission android:name="android.permission.INTERNET" />
 ```
 
 ### Step 2 - Initialize Blondie
