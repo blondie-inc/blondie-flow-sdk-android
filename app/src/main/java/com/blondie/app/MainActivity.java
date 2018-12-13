@@ -22,10 +22,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 BlondieEvent blondieEvent = new BlondieEvent("");
-                blondieEvent.set("entityType","Devices");
+                blondieEvent.set("entityType", "Devices");
                 blondieEvent.set("entityId", "000004");
                 blondieEvent.set("eventName", "Submitted phone number");
-                Blondie.triggerEvent(blondieEvent);
+                Blondie.triggerEvent(getApplicationContext(), blondieEvent);
             }
         });
     }

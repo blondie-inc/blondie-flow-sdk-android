@@ -24,43 +24,32 @@ public class HttpRequestUtil {
     }
 
     private static void createHttpConnection(final String authKey, final JSONObject jsonParams) {
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    URL url = new URL(BASE_URL);
-                    HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                    httpsURLConnection.setRequestMethod("POST");
-                    httpsURLConnection.setRequestProperty("Content-Type", "application/json");
-                    httpsURLConnection.setRequestProperty("Authorization", "Bearer " + authKey);
-                    httpsURLConnection.setDoInput(true);
-                    httpsURLConnection.setDoOutput(true);
-                    httpsURLConnection.connect();
+        try {
+            URL url = new URL(BASE_URL);
+            HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            httpsURLConnection.setRequestMethod("POST");
+            httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpsURLConnection.setRequestProperty("Authorization", "Bearer " + authKey);
+            httpsURLConnection.setDoInput(true);
+            httpsURLConnection.setDoOutput(true);
+            httpsURLConnection.connect();
 
-                    Log.i("[Blondie]", jsonParams.toString());
+            Log.i("[Blondie]", jsonParams.toString());
 
-                    DataOutputStream os = new DataOutputStream(httpsURLConnection.getOutputStream());
-                    os.writeBytes(jsonParams.toString());
-                    os.flush();
-                    os.close();
+            DataOutputStream os = new DataOutputStream(httpsURLConnection.getOutputStream());
+            os.writeBytes(jsonParams.toString());
+            os.flush();
+            os.close();
 
 
-                    Log.i("[Blondie]", String.valueOf(httpsURLConnection.getResponseCode()));
-                    Log.i("[Blondie]", httpsURLConnection.getResponseMessage());
+            Log.i("[Blondie]", String.valueOf(httpsURLConnection.getResponseCode()));
+            Log.i("[Blondie]", httpsURLConnection.getResponseMessage());
 
-                    httpsURLConnection.disconnect();
+            httpsURLConnection.disconnect();
 
-//                    autoRetries(conn.getResponseCode());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-//    private static void autoRetries(int responseCode) {
-//        if(responseCode < 499){
-//
-//        }
-//    }
 
 }
