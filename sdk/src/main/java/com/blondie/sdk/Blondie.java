@@ -1,6 +1,7 @@
 package com.blondie.sdk;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.util.Log;
 
 import com.blondie.sdk.network.HttpRequestUtil;
@@ -9,6 +10,9 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Created by alex on 12/9/18.
@@ -17,6 +21,8 @@ import java.io.IOException;
 public class Blondie {
 
     private static String sApiKey;
+    private static boolean isDisableOffline = false;
+    private static Queue<BlondieEvent> blondieEventQueue = new LinkedList<>();
 
     public static void setApiKey(String apiKey) {
         sApiKey = apiKey;
@@ -39,7 +45,7 @@ public class Blondie {
     }
 
     public static void disableOfflineMode() {
-
+        isDisableOffline = true;
     }
 
     public static void disableAutoRetries() {
@@ -47,12 +53,18 @@ public class Blondie {
     }
 
     public static void triggerEvent(final Context context, final BlondieEvent blondieEvent) {
-        Log.d("[Blondie]", "Go trough triggerEvent");
         new Thread(new Runnable() {
             public void run() {
                 String ifa = getIfaInfo(context);
                 blondieEvent.set("deviceId", ifa);
-                HttpRequestUtil.provideData(sApiKey, blondieEvent.getJsonParams());
+                blondieEventQueue.add(blondieEvent);
+                if (!isDisableOffline) {
+                    if (isNetworkConnected(context)) {
+                        HttpRequestUtil.provideData(sApiKey, blondieEventQueue);
+                    }
+                }else{
+                    HttpRequestUtil.provideData(sApiKey, blondieEventQueue);
+                }
             }
         }).start();
     }
@@ -71,5 +83,12 @@ public class Blondie {
             e.printStackTrace();
         }
         return AdvertisingID;
+    }
+
+    private static boolean isNetworkConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        boolean isNetworkConnected = cm.getActiveNetworkInfo() != null;
+        Log.d("[Blondie]", "Check isNetworkConnected: " + isNetworkConnected);
+        return isNetworkConnected;
     }
 }
