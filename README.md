@@ -28,7 +28,7 @@ allprojects {
 
 ```
 ```
-implementation 'com.blondie:sdk:0.0.1'
+implementation 'com.blondie:sdk:0.0.3'
 
 ```
 
