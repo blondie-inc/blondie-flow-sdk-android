@@ -38,7 +38,7 @@ public class BlondieEvent {
         }
     }
 
-    JSONObject getJsonParams(){
+    public JSONObject getJsonParams(){
         return jsonParams;
     }
 }
