@@ -13,10 +13,6 @@ import java.util.Queue;
 
 import javax.net.ssl.HttpsURLConnection;
 
-/**
- * Created by alex on 12/9/18.
- */
-
 public class HttpRequestUtil {
 
 

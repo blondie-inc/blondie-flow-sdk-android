@@ -13,9 +13,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
- * Created by alex on 12/9/18.
- */
 
 public class Blondie {
 
@@ -86,7 +83,10 @@ public class Blondie {
 
     private static boolean isNetworkConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        boolean isNetworkConnected = cm.getActiveNetworkInfo() != null;
+        boolean isNetworkConnected = false;
+        if (cm != null) {
+            isNetworkConnected = cm.getActiveNetworkInfo() != null;
+        }
         Log.d("[Blondie]", "Check isNetworkConnected: " + isNetworkConnected);
         return isNetworkConnected;
     }
