@@ -21,10 +21,9 @@ public class MainActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BlondieEvent blondieEvent = new BlondieEvent("");
+                BlondieEvent blondieEvent = new BlondieEvent("Submitted phone number");
                 blondieEvent.set("entityType", "Devices");
                 blondieEvent.set("entityId", "000004");
-                blondieEvent.set("eventName", "Submitted phone number");
                 Blondie.triggerEvent(getApplicationContext(), blondieEvent);
             }
         });

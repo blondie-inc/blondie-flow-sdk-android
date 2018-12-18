@@ -3,16 +3,13 @@ package com.blondie.sdk;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by alex on 12/9/18.
- */
-
 public class BlondieEvent {
     private String form;
     private JSONObject jsonParams;
 
     public BlondieEvent(String from) {
         this.form = form;
+        set("eventName", from);
     }
 
     public void set(String key, String value) {
