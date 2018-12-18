@@ -11,12 +11,12 @@ public class BlondieEvent {
     private String form;
     private JSONObject jsonParams;
 
-    public BlondieEvent(String from){
+    public BlondieEvent(String from) {
         this.form = form;
     }
 
-    public void set(String key, String value){
-        if(jsonParams == null){
+    public void set(String key, String value) {
+        if (jsonParams == null) {
             jsonParams = new JSONObject();
         }
         try {
@@ -27,8 +27,8 @@ public class BlondieEvent {
 
     }
 
-    public void set(String key, int value){
-        if(jsonParams == null){
+    public void set(String key, int value) {
+        if (jsonParams == null) {
             jsonParams = new JSONObject();
         }
         try {
@@ -38,7 +38,7 @@ public class BlondieEvent {
         }
     }
 
-    public JSONObject getJsonParams(){
+    public JSONObject getJsonParams() {
         return jsonParams;
     }
 }

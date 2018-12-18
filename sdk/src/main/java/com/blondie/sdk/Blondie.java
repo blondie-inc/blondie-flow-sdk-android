@@ -10,7 +10,6 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -62,7 +61,7 @@ public class Blondie {
                     if (isNetworkConnected(context)) {
                         HttpRequestUtil.provideData(sApiKey, blondieEventQueue);
                     }
-                }else{
+                } else {
                     HttpRequestUtil.provideData(sApiKey, blondieEventQueue);
                 }
             }
