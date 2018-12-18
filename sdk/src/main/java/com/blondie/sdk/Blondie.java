@@ -16,9 +16,9 @@ import java.util.Queue;
 
 public class Blondie {
 
-    private static String sApiKey;
+    private static String sApiKey= "";
     private static boolean isDisableOffline = false;
-    private static Queue<BlondieEvent> blondieEventQueue = new LinkedList<>();
+    private static boolean isDisableAutoRetries = false;
 
     public static void setApiKey(String apiKey) {
         sApiKey = apiKey;
@@ -40,54 +40,16 @@ public class Blondie {
 
     }
 
-    public static void disableOfflineMode() {
-        isDisableOffline = true;
+    public static void disableOfflineMode(boolean disableOffline) {
+        isDisableOffline = disableOffline;
     }
 
-    public static void disableAutoRetries() {
-
+    public static void disableAutoRetries(boolean disableAutoRetries) {
+        isDisableAutoRetries = disableAutoRetries;
     }
 
-    public static void triggerEvent(final Context context, final BlondieEvent blondieEvent) {
-        new Thread(new Runnable() {
-            public void run() {
-                String ifa = getIfaInfo(context);
-                blondieEvent.set("deviceId", ifa);
-                blondieEventQueue.add(blondieEvent);
-                if (!isDisableOffline) {
-                    if (isNetworkConnected(context)) {
-                        HttpRequestUtil.provideData(sApiKey, blondieEventQueue);
-                    }
-                } else {
-                    HttpRequestUtil.provideData(sApiKey, blondieEventQueue);
-                }
-            }
-        }).start();
-    }
-
-    private static String getIfaInfo(Context context) {
-        String AdvertisingID = "";
-        try {
-            AdvertisingIdClient.Info adInfo = AdvertisingIdClient.getAdvertisingIdInfo(context);
-            AdvertisingID = adInfo.getId();
-            Log.d("[Blondie]", "Check ID: " + AdvertisingID);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
-            e.printStackTrace();
-        } catch (GooglePlayServicesRepairableException e) {
-            e.printStackTrace();
-        }
-        return AdvertisingID;
-    }
-
-    private static boolean isNetworkConnected(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        boolean isNetworkConnected = false;
-        if (cm != null) {
-            isNetworkConnected = cm.getActiveNetworkInfo() != null;
-        }
-        Log.d("[Blondie]", "Check isNetworkConnected: " + isNetworkConnected);
-        return isNetworkConnected;
+    public static void triggerEvent(Context context, BlondieEvent blondieEvent) {
+        RequestBuilder requestBuilder = new RequestBuilder();
+        requestBuilder.buildRequest(context, blondieEvent, sApiKey, isDisableOffline, isDisableAutoRetries);
     }
 }
