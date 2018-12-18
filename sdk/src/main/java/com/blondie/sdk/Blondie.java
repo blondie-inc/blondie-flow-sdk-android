@@ -40,12 +40,12 @@ public class Blondie {
 
     }
 
-    public static void disableOfflineMode(boolean disableOffline) {
-        isDisableOffline = disableOffline;
+    public static void disableOfflineMode() {
+        isDisableOffline = true;
     }
 
-    public static void disableAutoRetries(boolean disableAutoRetries) {
-        isDisableAutoRetries = disableAutoRetries;
+    public static void disableAutoRetries() {
+        isDisableAutoRetries = true;
     }
 
     public static void triggerEvent(Context context, BlondieEvent blondieEvent) {
