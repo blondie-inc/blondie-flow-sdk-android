@@ -13,26 +13,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class RequestBuilder {
+class RequestBuilder {
     private static Queue<BlondieEvent> blondieEventQueue = new LinkedList<>();
-
-    void buildRequest(final Context context, final BlondieEvent blondieEvent, final String apiKey,
-                      final boolean isDisableOffline, final boolean isDisableAutoRetries) {
-        new Thread(new Runnable() {
-            public void run() {
-                String ifa = getIfaInfo(context);
-                blondieEvent.set("deviceId", ifa);
-                blondieEventQueue.add(blondieEvent);
-                if (!isDisableOffline) {
-                    if (isNetworkConnected(context)) {
-                        HttpRequestUtil.provideData(apiKey, blondieEventQueue, isDisableAutoRetries);
-                    }
-                } else {
-                    HttpRequestUtil.provideData(apiKey, blondieEventQueue, isDisableAutoRetries);
-                }
-            }
-        }).start();
-    }
 
     private static String getIfaInfo(Context context) {
         String AdvertisingID = "";
@@ -58,5 +40,23 @@ public class RequestBuilder {
         }
         Log.d("[Blondie]", "Check isNetworkConnected: " + isNetworkConnected);
         return isNetworkConnected;
+    }
+
+    void buildRequest(final Context context, final BlondieEvent blondieEvent, final String apiKey,
+                      final boolean isDisableOffline, final boolean isDisableAutoRetries, final String baseUrl) {
+        new Thread(new Runnable() {
+            public void run() {
+                String ifa = getIfaInfo(context);
+                blondieEvent.set("deviceId", ifa);
+                blondieEventQueue.add(blondieEvent);
+                if (!isDisableOffline) {
+                    if (isNetworkConnected(context)) {
+                        HttpRequestUtil.provideData(apiKey, blondieEventQueue, isDisableAutoRetries, baseUrl);
+                    }
+                } else {
+                    HttpRequestUtil.provideData(apiKey, blondieEventQueue, isDisableAutoRetries, baseUrl);
+                }
+            }
+        }).start();
     }
 }

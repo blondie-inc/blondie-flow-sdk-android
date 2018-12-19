@@ -23,12 +23,12 @@ public class MainActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(System.currentTimeMillis() % 2 == 0){
+                if (System.currentTimeMillis() % 2 == 0) {
                     BlondieEvent blondieEvent = new BlondieEvent("Submitted phone number");
                     blondieEvent.set("entityType", "Devices");
                     blondieEvent.set("entityId", "000004");
                     Blondie.triggerEvent(getApplicationContext(), blondieEvent);
-                }else{
+                } else {
                     BlondieEvent blondieEvent = new BlondieEvent("Submitted device info");
                     blondieEvent.set("deviceType", "Sumsung");
                     blondieEvent.set("deviceId", "234445666");

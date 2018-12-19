@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.Queue;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -17,19 +16,19 @@ import javax.net.ssl.HttpsURLConnection;
 public class HttpRequestUtil {
 
     private static final int TRY_COUNT = 5;
-    private static final String BASE_URL = "https://flow.blondie.lv/webhooks/events";
 
-    public static void provideData(String apiKey, Queue<BlondieEvent> blondieEventQueue, boolean isDisableAutoRetries) {
+    public static void provideData(String apiKey, Queue<BlondieEvent> blondieEventQueue,
+                                   boolean isDisableAutoRetries, String baseUrl) {
         for (int i = blondieEventQueue.size(); i > 0; i--) {
             Log.d("[Blondie]", "Check size(): " + blondieEventQueue.size());
             BlondieEvent blondieEvent = blondieEventQueue.remove();
             Log.d("[Blondie]", blondieEvent.getJsonParams().toString());
             JSONObject jsonParams = blondieEvent.getJsonParams();
-            if(!isDisableAutoRetries){
-                for(int j = 0; j <= TRY_COUNT; j++){
-                    int responseCode = createHttpConnection(apiKey, jsonParams);
+            if (!isDisableAutoRetries) {
+                for (int j = 0; j <= TRY_COUNT; j++) {
+                    int responseCode = createHttpConnection(apiKey, jsonParams, baseUrl);
                     Log.d("[Blondie]", "Check response code: " + responseCode);
-                    if(responseCode < 400){
+                    if (responseCode < 400) {
                         break;
                     }
                 }
@@ -37,10 +36,11 @@ public class HttpRequestUtil {
         }
     }
 
-    private static int createHttpConnection(final String authKey, final JSONObject jsonParams) {
+    private static int createHttpConnection(final String authKey, final JSONObject jsonParams,
+                                            String baseUrl) {
         int responseCode = 0;
         try {
-            URL url = new URL(BASE_URL);
+            URL url = new URL(baseUrl);
             HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setRequestMethod("POST");
             httpsURLConnection.setRequestProperty("Content-Type", "application/json");

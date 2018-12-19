@@ -4,11 +4,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BlondieEvent {
-    private String form;
     private JSONObject jsonParams;
 
     public BlondieEvent(String from) {
-        this.form = form;
         set("eventName", from);
     }
 
