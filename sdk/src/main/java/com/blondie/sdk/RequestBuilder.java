@@ -47,7 +47,8 @@ class RequestBuilder {
         new Thread(new Runnable() {
             public void run() {
                 String ifa = getIfaInfo(context);
-                blondieEvent.set("deviceId", ifa);
+                blondieEvent.set("entityType", "Devices");
+                blondieEvent.set("entityId", ifa);
                 blondieEventQueue.add(blondieEvent);
                 if (!isDisableOffline) {
                     if (isNetworkConnected(context)) {
