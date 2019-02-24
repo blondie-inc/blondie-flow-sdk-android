@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
                     BlondieEvent blondieEvent = new BlondieEvent("Submitted device info");
                     Blondie.triggerEvent(getApplicationContext(), blondieEvent);
                 }
-
-
             }
         });
     }
