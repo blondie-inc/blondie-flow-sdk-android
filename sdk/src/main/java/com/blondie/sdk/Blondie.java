@@ -15,15 +15,15 @@ public class Blondie {
     }
 
     public static void useDevelopmentEnvironment() {
-        baseUrl = " https://flow-dev.blondie.lv/webhooks/events";
+        baseUrl = "https://us-central1-blondie-flow-dev.cloudfunctions.net/webhooks/webhooks/events";
     }
 
     public static void useTestEnvironment() {
-        baseUrl = "https://flow-test.blondie.lv/webhooks/events";
+        baseUrl = "https://us-central1-blondie-flow-test.cloudfunctions.net/webhooks/webhooks/events";
     }
 
     public static void useProductionEnvironment() {
-        baseUrl = "https://flow.blondie.lv/webhooks/events";
+        baseUrl = "https://us-central1-blondie-flow.cloudfunctions.net/webhooks/webhooks/events";
     }
 
     public static void setBaseUrl(String url) {
