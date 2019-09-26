@@ -3,20 +3,15 @@ package com.blondie.sdk;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by alex on 12/9/18.
- */
-
 public class BlondieEvent {
-    private String form;
     private JSONObject jsonParams;
 
-    public BlondieEvent(String from){
-        this.form = form;
+    public BlondieEvent(String from) {
+        set("eventName", from);
     }
 
-    public void set(String key, String value){
-        if(jsonParams == null){
+    public void set(String key, String value) {
+        if (jsonParams == null) {
             jsonParams = new JSONObject();
         }
         try {
@@ -27,8 +22,8 @@ public class BlondieEvent {
 
     }
 
-    public void set(String key, int value){
-        if(jsonParams == null){
+    public void set(String key, int value) {
+        if (jsonParams == null) {
             jsonParams = new JSONObject();
         }
         try {
@@ -38,7 +33,7 @@ public class BlondieEvent {
         }
     }
 
-    public JSONObject getJsonParams(){
+    public JSONObject getJsonParams() {
         return jsonParams;
     }
 }
