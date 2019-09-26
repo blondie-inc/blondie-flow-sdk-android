@@ -22,7 +22,7 @@ allprojects {
             dirs '../libs'
         }
         maven { url "https://jitpack.io" }
-        maven { url "https://blondie.bintray.com/maven/" }
+        maven { url "https://blondie-inc.bintray.com/maven/" }
     }
 }
 
