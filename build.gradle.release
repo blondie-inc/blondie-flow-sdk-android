@@ -16,7 +16,7 @@ allprojects {
         flatDir {
             dirs '../libs'
         }
-        maven { url "http://dl.bintray.com/blondie/maven" }
+        maven { url "http://dl.bintray.com/blondie-inc/blondie-flow-sdk-android" }
     }
 }
 
