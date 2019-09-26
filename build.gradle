@@ -26,10 +26,8 @@ allprojects {
         flatDir {
             dirs '../libs'
         }
-        maven { 
-            url "https://jitpack.io"
-        }
-        maven { url "https://blondie-inc.bintray.com/maven/" }
+        maven { url "https://jitpack.io" }
+        maven { url "https://blondie-inc.bintray.com/maven" }
     }
 }
 

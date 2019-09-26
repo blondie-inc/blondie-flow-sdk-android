@@ -1,47 +1,33 @@
 package com.blondie.sdk;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.util.Log;
 
-import com.blondie.sdk.network.HttpRequestUtil;
-import com.google.android.gms.ads.identifier.AdvertisingIdClient;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.LinkedList;
-import java.util.Queue;
-
-/**
- * Created by alex on 12/9/18.
- */
 
 public class Blondie {
 
-    private static String sApiKey;
+    private static String sApiKey = "";
     private static boolean isDisableOffline = false;
-    private static Queue<BlondieEvent> blondieEventQueue = new LinkedList<>();
+    private static boolean isDisableAutoRetries = false;
+    private static String baseUrl = "https://flow.blondie.lv/webhooks/events";
 
     public static void setApiKey(String apiKey) {
         sApiKey = apiKey;
     }
 
     public static void useDevelopmentEnvironment() {
-
+        baseUrl = "https://us-central1-blondie-flow-dev.cloudfunctions.net/webhooks/webhooks/events";
     }
 
     public static void useTestEnvironment() {
-
+        baseUrl = "https://us-central1-blondie-flow-test.cloudfunctions.net/webhooks/webhooks/events";
     }
 
     public static void useProductionEnvironment() {
-
+        baseUrl = "https://us-central1-blondie-flow.cloudfunctions.net/webhooks/webhooks/events";
     }
 
     public static void setBaseUrl(String url) {
-
+        baseUrl = url;
     }
 
     public static void disableOfflineMode() {
@@ -49,46 +35,11 @@ public class Blondie {
     }
 
     public static void disableAutoRetries() {
-
+        isDisableAutoRetries = true;
     }
 
-    public static void triggerEvent(final Context context, final BlondieEvent blondieEvent) {
-        new Thread(new Runnable() {
-            public void run() {
-                String ifa = getIfaInfo(context);
-                blondieEvent.set("deviceId", ifa);
-                blondieEventQueue.add(blondieEvent);
-                if (!isDisableOffline) {
-                    if (isNetworkConnected(context)) {
-                        HttpRequestUtil.provideData(sApiKey, blondieEventQueue);
-                    }
-                }else{
-                    HttpRequestUtil.provideData(sApiKey, blondieEventQueue);
-                }
-            }
-        }).start();
-    }
-
-    private static String getIfaInfo(Context context) {
-        String AdvertisingID = "";
-        try {
-            AdvertisingIdClient.Info adInfo = AdvertisingIdClient.getAdvertisingIdInfo(context);
-            AdvertisingID = adInfo.getId();
-            Log.d("[Blondie]", "Check ID: " + AdvertisingID);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
-            e.printStackTrace();
-        } catch (GooglePlayServicesRepairableException e) {
-            e.printStackTrace();
-        }
-        return AdvertisingID;
-    }
-
-    private static boolean isNetworkConnected(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        boolean isNetworkConnected = cm.getActiveNetworkInfo() != null;
-        Log.d("[Blondie]", "Check isNetworkConnected: " + isNetworkConnected);
-        return isNetworkConnected;
+    public static void triggerEvent(Context context, BlondieEvent blondieEvent) {
+        RequestBuilder requestBuilder = new RequestBuilder();
+        requestBuilder.buildRequest(context, blondieEvent, sApiKey, isDisableOffline, isDisableAutoRetries, baseUrl);
     }
 }

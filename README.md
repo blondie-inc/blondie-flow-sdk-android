@@ -114,3 +114,19 @@ event.set("customer.phone", "+3712654321");
 event.set("customer.email", "demo@example.com");
 Blondie.triggerEvent(event);
 ```
+## Upload new version maven
+1. You have made new changes to your build.
+2. Open file blondie-android-sdk/sdk/build.properties
+3. Increase versionCode and versionName
+4. In terminal (Android Studio) execute the command - ./gradlew :sdk:bintrayUpload
+
+## Create new maven account
+1. Go to bintray home page
+2. In field "Owned Repositories" choose "Add New Repository"
+3. Input name, choose type "maven", click on "Create"
+4. Go in created repository, click on "Add a Package", input namem choose licence "Apache-2.0", add your git url in "Version control" field.
+5. Create new file  binrayauth.properties in package Home/.adnroid
+6. Add to file fields:
+bintrayUser=[your user name on bintray]
+bintrayApiKey=[your api key on bintray]
+7. In terminal (Android Studio) execute the command - ./gradlew :sdk:bintrayUpload
